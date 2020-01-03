@@ -24,6 +24,23 @@ class CasatorontoChallengeApplicationTests {
 	}
 
 	@Test
+	void testNights43() {
+		LocalDate checkIn = LocalDate.of(2019, Month.JANUARY, 01);
+		LocalDate checkOut = LocalDate.of(2019, Month.JANUARY, 04);
+
+		try {
+			Travel travel = service.add(new Travel(null, checkIn, checkOut));
+			int[] expecteds = new int[] { 3, 0, 0 };
+			int[] actuals = new int[] { travel.getExtraNightsBefore(), travel.getWeeks(),
+					travel.getExtraNightsAfter() };
+
+			assertArrayEquals(expecteds, actuals);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
 	void testNights1() {
 		LocalDate checkIn = LocalDate.of(2019, Month.JUNE, 05);
 		LocalDate checkOut = LocalDate.of(2019, Month.AUGUST, 27);
@@ -696,6 +713,143 @@ class CasatorontoChallengeApplicationTests {
 		try {
 			Travel travel = service.add(new Travel(null, checkIn, checkOut));
 			int[] expecteds = new int[] { 0, 2, 0 };
+			int[] actuals = new int[] { travel.getExtraNightsBefore(), travel.getWeeks(),
+					travel.getExtraNightsAfter() };
+
+			assertArrayEquals(expecteds, actuals);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
+	@Test
+	void testNights44() {
+		LocalDate checkIn = LocalDate.of(2020, Month.JANUARY, 01);
+		LocalDate checkOut = LocalDate.of(2020, Month.JANUARY, 04);
+
+		try {
+			Travel travel = service.add(new Travel(null, checkIn, checkOut));
+			int[] expecteds = new int[] { 3, 0, 0 };
+			int[] actuals = new int[] { travel.getExtraNightsBefore(), travel.getWeeks(),
+					travel.getExtraNightsAfter() };
+
+			assertArrayEquals(expecteds, actuals);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	void testNights45() {
+		LocalDate checkIn = LocalDate.of(2020, Month.JANUARY, 02);
+		LocalDate checkOut = LocalDate.of(2020, Month.JANUARY, 03);
+
+		try {
+			Travel travel = service.add(new Travel(null, checkIn, checkOut));
+			int[] expecteds = new int[] { 1, 0, 0 };
+			int[] actuals = new int[] { travel.getExtraNightsBefore(), travel.getWeeks(),
+					travel.getExtraNightsAfter() };
+
+			assertArrayEquals(expecteds, actuals);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	void testNights46() {
+		LocalDate checkIn = LocalDate.of(2020, Month.JANUARY, 02);
+		LocalDate checkOut = LocalDate.of(2020, Month.JANUARY, 04);
+
+		try {
+			Travel travel = service.add(new Travel(null, checkIn, checkOut));
+			int[] expecteds = new int[] { 2, 0, 0 };
+			int[] actuals = new int[] { travel.getExtraNightsBefore(), travel.getWeeks(),
+					travel.getExtraNightsAfter() };
+
+			assertArrayEquals(expecteds, actuals);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	void testNights47() {
+		LocalDate checkIn = LocalDate.of(2020, Month.JANUARY, 02);
+		LocalDate checkOut = LocalDate.of(2020, Month.JANUARY, 05);
+
+		try {
+			Travel travel = service.add(new Travel(null, checkIn, checkOut));
+			int[] expecteds = new int[] { 3, 0, 0 };
+			int[] actuals = new int[] { travel.getExtraNightsBefore(), travel.getWeeks(),
+					travel.getExtraNightsAfter() };
+
+			assertArrayEquals(expecteds, actuals);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	void testNights48() {
+		LocalDate checkIn = LocalDate.of(2020, Month.JANUARY, 02);
+		LocalDate checkOut = LocalDate.of(2020, Month.JANUARY, 06);
+
+		try {
+			Travel travel = service.add(new Travel(null, checkIn, checkOut));
+			int[] expecteds = new int[] { 0, 1, 0 };
+			int[] actuals = new int[] { travel.getExtraNightsBefore(), travel.getWeeks(),
+					travel.getExtraNightsAfter() };
+
+			assertArrayEquals(expecteds, actuals);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	void testNights49() {
+		LocalDate checkIn = LocalDate.of(2020, Month.JANUARY, 03);
+		LocalDate checkOut = LocalDate.of(2020, Month.JANUARY, 06);
+
+		try {
+			Travel travel = service.add(new Travel(null, checkIn, checkOut));
+			int[] expecteds = new int[] { 3, 0, 0 };
+			int[] actuals = new int[] { travel.getExtraNightsBefore(), travel.getWeeks(),
+					travel.getExtraNightsAfter() };
+
+			assertArrayEquals(expecteds, actuals);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}	
+	
+	@Test
+	void testNights50() {
+		LocalDate checkIn = LocalDate.of(2020, Month.JANUARY, 02);
+		LocalDate checkOut = LocalDate.of(2020, Month.JANUARY, 07);
+
+		try {
+			Travel travel = service.add(new Travel(null, checkIn, checkOut));
+			int[] expecteds = new int[] { 0, 1, 0 };
+			int[] actuals = new int[] { travel.getExtraNightsBefore(), travel.getWeeks(),
+					travel.getExtraNightsAfter() };
+
+			assertArrayEquals(expecteds, actuals);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	void testNights51() {
+		LocalDate checkIn = LocalDate.of(2020, Month.JANUARY, 02);
+		LocalDate checkOut = LocalDate.of(2020, Month.JANUARY, 8);
+
+		try {
+			Travel travel = service.add(new Travel(null, checkIn, checkOut));
+			int[] expecteds = new int[] { 0, 1, 0 };
 			int[] actuals = new int[] { travel.getExtraNightsBefore(), travel.getWeeks(),
 					travel.getExtraNightsAfter() };
 
