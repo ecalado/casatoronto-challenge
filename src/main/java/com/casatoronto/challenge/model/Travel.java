@@ -80,64 +80,72 @@ public class Travel {
 		LocalDate newCheckIn = this.checkIn;
 		LocalDate newCheckOut = this.checkOut;
 
-		switch (dayOfWeekCheckIn) {
-		// Sunday
-		case 1:
-		case 2:
-			newCheckIn = newCheckIn.minusDays(dayOfWeekCheckIn);
-		case 7:
-			if (dayOfWeekCheckOut < 7) {
-				newCheckOut = newCheckOut.minusDays(dayOfWeekCheckOut);
-				this.extraNightsAfter = dayOfWeekCheckOut;
-			}
-
-			break;
-
-		// Saturday
-		case 3:
-		case 4:
-		case 5:
-			this.extraNightsBefore = 6 - dayOfWeekCheckIn;
-			newCheckIn = newCheckIn.plusDays(this.extraNightsBefore);
-
-		case 6:
-			if (dayOfWeekCheckOut < 6) {
-				newCheckOut = newCheckOut.minusDays(dayOfWeekCheckOut + 1);
-				this.extraNightsAfter = dayOfWeekCheckOut + 1;
-			} else if (dayOfWeekCheckOut > 6) {
-				newCheckOut = newCheckOut.minusDays(1);
-				this.extraNightsAfter = 1;
-			}
-
-			break;
-		default:
-			break;
-		}
-
-		this.weeks = (int) ChronoUnit.WEEKS.between(newCheckIn, newCheckOut);
-
-		if (this.extraNightsAfter >= 4) {
+		int numberOfDays = (int)ChronoUnit.DAYS.between(newCheckIn, newCheckOut);
+		
+		if ( numberOfDays >= 4 && numberOfDays < 7) {
 			this.extraNightsAfter = 0;
-			this.weeks++;
-		}
-
-		if (!newCheckOut.isAfter(newCheckIn)) {
-			newCheckIn = this.checkIn;
-			newCheckOut = this.checkOut;
-
-			this.extraNightsBefore = (int) ChronoUnit.DAYS.between(newCheckIn, newCheckOut);
-
-			this.extraNightsAfter = 0;
-			this.weeks = 0;
-
-			if (this.extraNightsBefore >= 4) {
-
-				if (dayOfWeekCheckIn >= 3 && dayOfWeekCheckIn <= 6 && this.extraNightsBefore >= 7) {
-					this.extraNightsBefore = 6 - dayOfWeekCheckIn;
-				} else {
-					this.extraNightsBefore = 0;
+			this.extraNightsBefore = 0;
+			this.weeks = 1;
+		} else {
+			switch (dayOfWeekCheckIn) {
+			// Sunday
+			case 1:
+			case 2:
+				newCheckIn = newCheckIn.minusDays(dayOfWeekCheckIn);
+			case 7:
+				if (dayOfWeekCheckOut < 7) {
+					newCheckOut = newCheckOut.minusDays(dayOfWeekCheckOut);
+					this.extraNightsAfter = dayOfWeekCheckOut;
 				}
-				this.weeks = 1;
+
+				break;
+
+			// Saturday
+			case 3:
+			case 4:
+			case 5:
+				this.extraNightsBefore = 6 - dayOfWeekCheckIn;
+				newCheckIn = newCheckIn.plusDays(this.extraNightsBefore);
+
+			case 6:
+				if (dayOfWeekCheckOut < 6) {
+					newCheckOut = newCheckOut.minusDays(dayOfWeekCheckOut + 1);
+					this.extraNightsAfter = dayOfWeekCheckOut + 1;
+				} else if (dayOfWeekCheckOut > 6) {
+					newCheckOut = newCheckOut.minusDays(1);
+					this.extraNightsAfter = 1;
+				}
+
+				break;
+			default:
+				break;
+			}
+
+			if (newCheckOut.isAfter(newCheckIn)) {
+				this.weeks = (int) ChronoUnit.WEEKS.between(newCheckIn, newCheckOut);
+
+				if (this.extraNightsAfter >= 4) {
+					this.extraNightsAfter = 0;
+					this.weeks++;
+				}
+			} else {
+				newCheckIn = this.checkIn;
+				newCheckOut = this.checkOut;
+
+				this.extraNightsBefore = (int) ChronoUnit.DAYS.between(newCheckIn, newCheckOut);
+
+				this.extraNightsAfter = 0;
+				this.weeks = 0;
+
+				if (this.extraNightsBefore >= 4) {
+
+					if (dayOfWeekCheckIn >= 3 && dayOfWeekCheckIn <= 6 && this.extraNightsBefore >= 7) {
+						this.extraNightsBefore = 6 - dayOfWeekCheckIn;
+					} else {
+						this.extraNightsBefore = 0;
+					}
+					this.weeks = 1;
+				}
 			}
 		}
 	}
