@@ -13,7 +13,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 /**
  * Travel
  * 
- * class responsible for saving checkIn and checkOut information. 
+ * class responsible for saving checkIn and checkOut information.
  * 
  * @author ecalado@gmail.com
  *
@@ -99,7 +99,7 @@ public class Travel {
 		case 5:
 			this.extraNightsBefore = 6 - dayOfWeekCheckIn;
 			newCheckIn = newCheckIn.plusDays(this.extraNightsBefore);
-			
+
 		case 6:
 			if (dayOfWeekCheckOut < 6) {
 				newCheckOut = newCheckOut.minusDays(dayOfWeekCheckOut + 1);
@@ -120,19 +120,25 @@ public class Travel {
 			this.extraNightsAfter = 0;
 			this.weeks++;
 		}
-		
+
 		if (!newCheckOut.isAfter(newCheckIn)) {
 			newCheckIn = this.checkIn;
 			newCheckOut = this.checkOut;
-			
+
 			this.extraNightsBefore = (int) ChronoUnit.DAYS.between(newCheckIn, newCheckOut);
+
 			this.extraNightsAfter = 0;
 			this.weeks = 0;
-			
+
 			if (this.extraNightsBefore >= 4) {
-				this.extraNightsBefore = 0;
+
+				if (dayOfWeekCheckIn >= 3 && dayOfWeekCheckIn <= 6 && this.extraNightsBefore >= 7) {
+					this.extraNightsBefore = 6 - dayOfWeekCheckIn;
+				} else {
+					this.extraNightsBefore = 0;
+				}
 				this.weeks = 1;
 			}
-		} 
+		}
 	}
 }
