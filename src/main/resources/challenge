@@ -1,0 +1,32 @@
+Desafio contagem de semanas e noites extras
+
+Preparar uma função que receba 2 datas diferentes e válidas (check-in e check-out da viagem) e retorne o número de noites extras no começo, número de semanas e número de noites extras no fim da viagem.
+
+Ex.:
+contagemNoitesESemanas(check-in, check-out);
+retorno JSON:
+
+{
+	noitesExtrasComeco: 2,
+	semanas: 4,
+	noitesExtrasFim: 3,
+}
+
+Datas:
+-As datas tem o formato YYYY-MM-DD. (ex.: 2020-01-02).
+-A data de check-out deve ser maior que a data de check-in.
+
+Noites extras no começo:
+-Se a data de check-in for um sábado, domingo, segunda ou terça, não são contadas noites extras no começo da viagem.
+-Se a data de check-in for uma quarta-feira, quinta-feira ou sexta-feira, contar noites extras no começo até o próximo sábado.
+
+Semanas:
+-Se a data de check-in for um sábado, contar semanas de sábado em sábado até o último sábado antes ou igual ao check-out.
+-Se a data de check-in for um domingo, contar semanas de domingo em domingo até o último domingo antes ou igual ao check-out.
+-Se a data de check-in for uma segunda ou terça, contar semanas de domingo em domingo a partir do primeiro domingo anterior ao check-in até o último domingo antes ou igual ao check-out.
+-Se a data de check-in for uma quarta-feira, quinta-feira ou sexta-feira, contar semanas de sábado em sábado a partir do primeiro sábado após ao check-in até o último sábado antes ou igual ao check-out.
+
+Noites extras no fim:
+-Se a contagem de semanas for de sábado em sábado, contar noites extras a partir do último sábado até o check-out.
+-Se a contagem de semanas for de domingo em domingo, contar noites extras a partir do último domingo até o check-out.
+-Se a contagem de noites extras do fim da viagem for maior ou igual a 4, zerar contagem e acrescentar uma semana a mais na contagem de semanas.
