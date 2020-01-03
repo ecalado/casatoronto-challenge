@@ -7,10 +7,4 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 public class CheckOutIsLTECheckInException extends RuntimeException {
 
 	private static final long serialVersionUID = -4792346823124305195L;
-	
-//	public static final String MSG = "CheckOut can not be less than or equal to CheckIn.";
-	
-//	public CheckOutIsLTECheckInException() {
-//		super(MSG);	
-//	}
 }
