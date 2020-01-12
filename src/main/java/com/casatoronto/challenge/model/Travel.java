@@ -1,14 +1,15 @@
 package com.casatoronto.challenge.model;
 
 import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
-import java.util.UUID;
 
+import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.lang.NonNull;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * Travel
@@ -18,19 +19,20 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * @author ecalado@gmail.com
  *
  */
-public class Travel {
+@Document("travel")
+public class Travel extends CasaTorontoModel {
 
-	private final UUID id;
-
-	@NonNull
-	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-	@JsonFormat(pattern = "yyyy-MM-dd")
-	private final LocalDate checkIn;
+	private static final long serialVersionUID = 6068956248338948570L;
 
 	@NonNull
 	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
 	@JsonFormat(pattern = "yyyy-MM-dd")
-	private final LocalDate checkOut;
+	private LocalDate checkIn;
+
+	@NonNull
+	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+	@JsonFormat(pattern = "yyyy-MM-dd")
+	private LocalDate checkOut;
 
 	private int extraNightsAfter;
 
@@ -38,115 +40,66 @@ public class Travel {
 
 	private int extraNightsBefore;
 
-	public Travel(@JsonProperty("id") UUID id, @JsonProperty("checkIn") LocalDate checkIn,
-			@JsonProperty("checkOut") LocalDate checkOut) {
-		this.id = id;
-		this.checkIn = checkIn;
-		this.checkOut = checkOut;
-		this.countNightsAndWeeks();
+	public Travel() {
+
 	}
 
-	public UUID getId() {
-		return this.id;
+	public Travel(@JsonProperty("checkIn") LocalDate checkIn, @JsonProperty("checkOut") LocalDate checkOut) {
+		this.checkIn = checkIn;
+		this.checkOut = checkOut;
 	}
 
 	public LocalDate getCheckIn() {
-		return this.checkIn;
+		return checkIn;
+	}
+
+	public void setCheckIn(LocalDate checkIn) {
+		this.checkIn = checkIn;
 	}
 
 	public LocalDate getCheckOut() {
-		return this.checkOut;
+		return checkOut;
 	}
 
-	public int getExtraNightsBefore() {
-		return this.extraNightsBefore;
+	public void setCheckOut(LocalDate checkOut) {
+		this.checkOut = checkOut;
 	}
 
 	public int getExtraNightsAfter() {
-		return this.extraNightsAfter;
+		return extraNightsAfter;
+	}
+
+	public void setExtraNightsAfter(int extraNightsAfter) {
+		this.extraNightsAfter = extraNightsAfter;
 	}
 
 	public int getWeeks() {
-		return this.weeks;
+		return weeks;
 	}
 
-	/*
-	 * This method is used for calculating the attributes: extraNightsAfter,
-	 * extraNightsAfter and weeks
-	 */
-	private void countNightsAndWeeks() {
-		int dayOfWeekCheckIn = this.checkIn.getDayOfWeek().getValue();
-		int dayOfWeekCheckOut = this.checkOut.getDayOfWeek().getValue();
-		LocalDate newCheckIn = this.checkIn;
-		LocalDate newCheckOut = this.checkOut;
+	public void setWeeks(int weeks) {
+		this.weeks = weeks;
+	}
 
-		int numberOfDays = (int)ChronoUnit.DAYS.between(newCheckIn, newCheckOut);
-		
-		if ( numberOfDays >= 4 && numberOfDays < 7) {
-			this.extraNightsAfter = 0;
-			this.extraNightsBefore = 0;
-			this.weeks = 1;
-		} else {
-			switch (dayOfWeekCheckIn) {
-			// Sunday
-			case 1:
-			case 2:
-				newCheckIn = newCheckIn.minusDays(dayOfWeekCheckIn);
-			case 7:
-				if (dayOfWeekCheckOut < 7) {
-					newCheckOut = newCheckOut.minusDays(dayOfWeekCheckOut);
-					this.extraNightsAfter = dayOfWeekCheckOut;
-				}
+	public int getExtraNightsBefore() {
+		return extraNightsBefore;
+	}
 
-				break;
+	public void setExtraNightsBefore(int extraNightsBefore) {
+		this.extraNightsBefore = extraNightsBefore;
+	}
 
-			// Saturday
-			case 3:
-			case 4:
-			case 5:
-				this.extraNightsBefore = 6 - dayOfWeekCheckIn;
-				newCheckIn = newCheckIn.plusDays(this.extraNightsBefore);
+	@Override
+	public String toString() {
+		ObjectMapper mapper = new ObjectMapper();
+		String jsonInString = "";
 
-			case 6:
-				if (dayOfWeekCheckOut < 6) {
-					newCheckOut = newCheckOut.minusDays(dayOfWeekCheckOut + 1);
-					this.extraNightsAfter = dayOfWeekCheckOut + 1;
-				} else if (dayOfWeekCheckOut > 6) {
-					newCheckOut = newCheckOut.minusDays(1);
-					this.extraNightsAfter = 1;
-				}
-
-				break;
-			default:
-				break;
-			}
-
-			if (newCheckOut.isAfter(newCheckIn)) {
-				this.weeks = (int) ChronoUnit.WEEKS.between(newCheckIn, newCheckOut);
-
-				if (this.extraNightsAfter >= 4) {
-					this.extraNightsAfter = 0;
-					this.weeks++;
-				}
-			} else {
-				newCheckIn = this.checkIn;
-				newCheckOut = this.checkOut;
-
-				this.extraNightsBefore = (int) ChronoUnit.DAYS.between(newCheckIn, newCheckOut);
-
-				this.extraNightsAfter = 0;
-				this.weeks = 0;
-
-				if (this.extraNightsBefore >= 4) {
-
-					if (dayOfWeekCheckIn >= 3 && dayOfWeekCheckIn <= 6 && this.extraNightsBefore >= 7) {
-						this.extraNightsBefore = 6 - dayOfWeekCheckIn;
-					} else {
-						this.extraNightsBefore = 0;
-					}
-					this.weeks = 1;
-				}
-			}
+		try {
+			jsonInString = mapper.writeValueAsString(this);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
 		}
+
+		return jsonInString;
 	}
 }
