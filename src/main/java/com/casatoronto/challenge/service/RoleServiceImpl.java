@@ -16,12 +16,17 @@ public class RoleServiceImpl implements RoleService {
 	private RoleRepository repository;
 
 	@Override
-	public Optional<Role> findByName(RoleName roleName) {
-		return repository.findByName(roleName);
+	public Role getInstanceOfEntityModel() {
+		return new Role();
 	}
 
 	@Override
-	public Optional<Role> insert(Role role) {
-		return Optional.of(repository.insert(role));
+	public RoleRepository getRepository() {
+		return repository;
+	}
+	
+	@Override
+	public Optional<Role> findByName(RoleName roleName) {
+		return repository.findByName(roleName);
 	}
 }

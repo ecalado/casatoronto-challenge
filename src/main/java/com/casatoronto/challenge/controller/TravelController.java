@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.lang.NonNull;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.validation.annotation.Validated;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.casatoronto.challenge.model.Travel;
@@ -29,13 +31,23 @@ public class TravelController {
 	private TravelService service;
 
 	@GetMapping(path = "")
-	@Secured(value = {"ROLE_USER", "ROLE_ADMIN"})
+	@Secured(value = { "ROLE_USER", "ROLE_ADMIN" })
 	public List<Travel> findAll() {
 		return service.findAll();
 	}
 
-	@GetMapping(path = "/filterByCheckIn")
-	public List<Travel> findAllByCheckInBetween(@Validated @NonNull @RequestBody TravelPeriodRequest travelPeriodRequest) {
+	@GetMapping(path = "/pageable")
+	@Secured(value = { "ROLE_USER", "ROLE_ADMIN" })
+	public Page<Travel> findAllPageable(@RequestParam(defaultValue = "0") Integer pageNo,
+			@RequestParam(defaultValue = "10") Integer pageSize, @RequestParam(defaultValue = "id") String sortBy,
+			@RequestParam(defaultValue = "asc") String orderedBy) {
+
+		return service.findAll(pageNo, pageSize, sortBy, orderedBy);
+	}
+
+	@GetMapping(path = "/filteredByCheckIn")
+	public List<Travel> findAllByCheckInBetween(
+			@Validated @NonNull @RequestBody TravelPeriodRequest travelPeriodRequest) {
 		return service.findAllByCheckInBetween(travelPeriodRequest);
 	}
 

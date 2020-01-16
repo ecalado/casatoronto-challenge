@@ -5,7 +5,6 @@ import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,36 +22,18 @@ public class TravelServiceImpl implements TravelService {
 	private TravelRepository repository;
 
 	@Override
-	public Travel create(TravelRequest travelRequest) {
-		Travel travel = new Travel();
-
-		this.create(travelRequest, travel);
-
-		return travel;
+	public Travel getInstanceOfEntityModel() {
+		return new Travel();
 	}
 
 	@Override
-	public Travel create(TravelRequest travelRequest, Travel travel) {
-		BeanUtils.copyProperties(travelRequest, travel);
-
-		return travel;
-	}
-
-	@Override
-	public List<Travel> findAll() {
-		return repository.findAll();
+	public TravelRepository getRepository() {
+		return repository;
 	}
 
 	@Override
 	public List<Travel> findAllByCheckInBetween(TravelPeriodRequest travelPeriodRequest) {
 		return repository.findAllByCheckInBetween(travelPeriodRequest.getStartDate(), travelPeriodRequest.getEndDate());
-	}
-
-	@Override
-	public Optional<Travel> findById(String id) {
-		Travel travel = repository.findById(id)
-				.orElseThrow(() -> new ResourceNotFoundException(Travel.class.getSimpleName(), "id", id));
-		return Optional.of(travel);
 	}
 
 	@Override
@@ -78,11 +59,6 @@ public class TravelServiceImpl implements TravelService {
 		this.countNightsAndWeeks(travel);
 
 		return Optional.of(repository.save(travel));
-	}
-
-	@Override
-	public void deleteById(String id) {
-		repository.deleteById(id);
 	}
 
 	/*
