@@ -8,8 +8,6 @@ import org.springframework.lang.NonNull;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * Travel
@@ -87,19 +85,5 @@ public class Travel extends CasaTorontoModel {
 
 	public void setExtraNightsBefore(int extraNightsBefore) {
 		this.extraNightsBefore = extraNightsBefore;
-	}
-
-	@Override
-	public String toString() {
-		ObjectMapper mapper = new ObjectMapper();
-		String jsonInString = "";
-
-		try {
-			jsonInString = mapper.writeValueAsString(this);
-		} catch (JsonProcessingException e) {
-			e.printStackTrace();
-		}
-
-		return jsonInString;
 	}
 }

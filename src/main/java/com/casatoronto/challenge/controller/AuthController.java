@@ -21,8 +21,8 @@ import com.casatoronto.challenge.model.User;
 import com.casatoronto.challenge.payload.ApiResponse;
 import com.casatoronto.challenge.payload.JwtAuthenticationResponse;
 import com.casatoronto.challenge.payload.LoginRequest;
-import com.casatoronto.challenge.payload.SignUpRequest;
-import com.casatoronto.challenge.security.JwtTokenProvider;
+import com.casatoronto.challenge.payload.UserRequest;
+import com.casatoronto.challenge.security.config.JwtTokenProvider;
 import com.casatoronto.challenge.service.UserService;
 
 @RestController
@@ -51,7 +51,7 @@ public class AuthController {
 	}
 
 	@PostMapping("/signup")
-	public ResponseEntity<?> register(@Valid @RequestBody SignUpRequest signupRequest) {
+	public ResponseEntity<?> register(@Valid @RequestBody UserRequest signupRequest) {
 
 		Optional<User> user = userService.insert(signupRequest);
 

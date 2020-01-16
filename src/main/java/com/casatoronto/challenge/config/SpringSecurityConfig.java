@@ -17,9 +17,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import com.casatoronto.challenge.security.CustomUserDetailsService;
-import com.casatoronto.challenge.security.JwtAuthenticationEntryPoint;
-import com.casatoronto.challenge.security.JwtAuthenticationFilter;
+import com.casatoronto.challenge.security.config.JwtAuthenticationEntryPoint;
+import com.casatoronto.challenge.security.config.JwtAuthenticationFilter;
+import com.casatoronto.challenge.security.service.CustomUserDetailsService;
 
 @Configuration
 @EnableWebSecurity
