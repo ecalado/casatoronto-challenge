@@ -5,6 +5,8 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.mongodb.datatables.DataTablesInput;
+import org.springframework.data.mongodb.datatables.DataTablesOutput;
 import org.springframework.lang.NonNull;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.validation.annotation.Validated;
@@ -43,6 +45,14 @@ public class TravelController {
 			@RequestParam(defaultValue = "asc") String orderedBy) {
 
 		return service.findAll(pageNo, pageSize, sortBy, orderedBy);
+	}
+	
+	@PostMapping(path = "/datatables")
+	@Secured(value = { "ROLE_USER", "ROLE_ADMIN" })
+	public DataTablesOutput<Travel> findAllDataTables(@Validated @RequestBody DataTablesInput dataTableInput) {
+		DataTablesOutput<Travel> output = service.findAll(dataTableInput);
+		
+		return output;
 	}
 
 	@GetMapping(path = "/filteredByCheckIn")

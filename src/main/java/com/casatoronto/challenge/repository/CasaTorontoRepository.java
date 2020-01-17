@@ -1,9 +1,14 @@
 package com.casatoronto.challenge.repository;
 
-import org.springframework.data.mongodb.repository.MongoRepository;
+import java.io.Serializable;
+
+import org.springframework.data.mongodb.datatables.DataTablesRepository;
+import org.springframework.data.repository.NoRepositoryBean;
 
 import com.casatoronto.challenge.model.CasaTorontoModel;
 
-public interface CasaTorontoRepository<T extends CasaTorontoModel, ID> extends MongoRepository<T, ID>{
+@NoRepositoryBean
+public interface CasaTorontoRepository<T extends CasaTorontoModel, ID extends Serializable>
+		extends DataTablesRepository<T, ID> {
 
 }

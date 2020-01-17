@@ -8,6 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import com.casatoronto.challenge.model.Role;
 import com.casatoronto.challenge.model.RoleName;
+import com.casatoronto.challenge.payload.RoleRequest;
 import com.casatoronto.challenge.service.RoleService;
 
 @SpringBootTest
@@ -18,14 +19,14 @@ class RoleServiceTests {
 
 	@Test
 	void testNights01() {
-		Role role = service.insert(new Role(RoleName.ROLE_ADMIN)).get();
+		Role role = service.insert(new RoleRequest(RoleName.ROLE_ADMIN)).get();
 
 		assertEquals(RoleName.ROLE_ADMIN, role.getName());
 	}
 
 	@Test
 	void testNights02() {
-		Role role = service.insert(new Role(RoleName.ROLE_USER)).get();
+		Role role = service.insert(new RoleRequest(RoleName.ROLE_USER)).get();
 
 		assertEquals(RoleName.ROLE_USER, role.getName());
 	}

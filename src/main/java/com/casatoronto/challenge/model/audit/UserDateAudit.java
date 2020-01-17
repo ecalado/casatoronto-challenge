@@ -1,5 +1,7 @@
 package com.casatoronto.challenge.model.audit;
 
+import java.util.Objects;
+
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.lang.NonNull;
@@ -34,5 +36,24 @@ public abstract class UserDateAudit extends DateAudit {
 
 	public void setUpdatedBy(String updatedBy) {
 		this.updatedBy = updatedBy;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		// self check
+		if (this == obj)
+			return true;
+		// null check
+		if (obj == null)
+			return false;
+		// type check and cast
+		if (getClass() != obj.getClass())
+			return false;
+
+		UserDateAudit userDateAudit = (UserDateAudit) obj;
+
+		// field comparison
+		return Objects.equals(createdBy, userDateAudit.createdBy) && Objects.equals(updatedBy, userDateAudit.updatedBy)
+				&& super.equals(obj);
 	}
 }

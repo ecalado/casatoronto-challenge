@@ -61,6 +61,11 @@ public class TravelServiceImpl implements TravelService {
 		return Optional.of(repository.save(travel));
 	}
 
+	@Override
+	public void deleteAll() {
+		repository.deleteAll();
+	}
+	
 	/*
 	 * This method is used for validating if checkOut is less than checkIn or
 	 * checkOut equal to checkIn
