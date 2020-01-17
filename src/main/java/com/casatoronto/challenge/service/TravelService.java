@@ -9,5 +9,7 @@ import com.casatoronto.challenge.payload.TravelRequest;
 public interface TravelService extends CasaTorontoService<Travel, TravelRequest, String> {
 
 	public List<Travel> findAllByCheckInBetween(TravelPeriodRequest travelPeriodRequest);
+	
+	public void deleteAll(); 
 
 }

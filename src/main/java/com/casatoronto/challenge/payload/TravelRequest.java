@@ -1,7 +1,9 @@
 package com.casatoronto.challenge.payload;
 
 import java.time.LocalDate;
+import java.util.Arrays;
 
+import org.springframework.data.mongodb.datatables.DataTablesInput;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.lang.NonNull;
 
@@ -42,4 +44,27 @@ public class TravelRequest extends CasaTorontoRequest {
 	public LocalDate getCheckOut() {
 		return checkOut;
 	}
+	
+	public static DataTablesInput getDefaultInput() {
+        DataTablesInput input = new DataTablesInput();
+        input.setColumns(Arrays.asList(
+                createColumn("id", true, true),
+                createColumn("checkIn", true, true),
+                createColumn("checkOut", true, true),
+                createColumn("createdAt", true, true),
+                createColumn("createdBy", true, true)
+        ));
+        input.setSearch(new DataTablesInput.Search("", false));
+        
+        return input;
+    }
+
+	public static DataTablesInput.Column createColumn(String columnName, boolean orderable, boolean searchable) {
+        DataTablesInput.Column column = new DataTablesInput.Column();
+        column.setData(columnName);
+        column.setOrderable(orderable);
+        column.setSearchable(searchable);
+        column.setSearch(new DataTablesInput.Search("", true));
+        return column;
+    }
 }

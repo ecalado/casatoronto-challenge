@@ -1,5 +1,7 @@
 package com.casatoronto.challenge.model;
 
+import java.util.Objects;
+
 import org.springframework.data.mongodb.core.mapping.FieldType;
 import org.springframework.data.mongodb.core.mapping.MongoId;
 
@@ -34,5 +36,23 @@ public abstract class CasaTorontoModel extends UserDateAudit {
 		}
 
 		return jsonInString;
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		// self check
+	    if (this == obj)
+	        return true;
+	    // null check
+	    if (obj == null)
+	        return false;
+	    // type check and cast
+	    if (getClass() != obj.getClass())
+	        return false;
+	    
+	    CasaTorontoModel model = (CasaTorontoModel) obj;
+	    
+	    // field comparison
+	    return Objects.equals(id, model.id) && super.equals(obj);
 	}
 }

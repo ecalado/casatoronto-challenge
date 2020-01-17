@@ -10,11 +10,13 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.convert.DefaultDbRefResolver;
 import org.springframework.data.mongodb.core.convert.MappingMongoConverter;
 import org.springframework.data.mongodb.core.mapping.MongoMappingContext;
+import org.springframework.data.mongodb.datatables.DataTablesRepositoryFactoryBean;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
 @Configuration
 @EnableMongoAuditing
-@EnableMongoRepositories(basePackages = "com.casatoronto.challenge.repository")
+@EnableMongoRepositories(basePackages = "com.casatoronto.challenge.repository", 
+						 repositoryFactoryBeanClass = DataTablesRepositoryFactoryBean.class)
 @ComponentScan(basePackages = {"com.casatoronto.challenge.repository"})
 public class MongoDBConfig {
 	
